@@ -16,6 +16,6 @@ namespace.on("connection", (socket: Socket) => {
   });
 });
 
-httpServer.listen(5500, () => {
-  console.log("server running on port:", 5500);
+httpServer.listen(process.env.PORT, () => {
+  console.log("server running on port:", process.env.PORT);
 });

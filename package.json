@@ -1,1 +1,16 @@
-{ "dependencies": { "express": "^4.21.2", "socket.io": "^4.8.1" } }
+{
+  "name": "buntest",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/express": "^5.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1"
+  }
+}
