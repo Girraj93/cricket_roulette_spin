@@ -1,5 +1,5 @@
 {
-  "name": "buntest",
+  "name": "cricket_roulette_spin",
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
