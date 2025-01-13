@@ -1,6 +1,8 @@
 import { createServer } from "http";
 import express from "express";
 import { Server, Socket } from "socket.io";
+import { CricketSpinRoulette } from "./connections/game";
+import { RoomManager } from "./connections/roomManager";
 
 export const app = express();
 export const httpServer = createServer(app);
@@ -8,13 +10,10 @@ export const io = new Server(httpServer, { cors: { origin: "*" } });
 
 export const namespace = io.of("/cric_rult_spn");
 
-namespace.on("connection", (socket: Socket) => {
-  console.log("socket connected with sid:", socket.id);
+export const gameInstance = new CricketSpinRoulette();
+export const roomManager = new RoomManager(namespace);
 
-  socket.on("disconnect", () => {
-    console.log("socket disconnected with sid:", socket.id);
-  });
-});
+console.log(roomManager);
 
 httpServer.listen(process.env.PORT, () => {
   console.log("server running on port:", process.env.PORT);
