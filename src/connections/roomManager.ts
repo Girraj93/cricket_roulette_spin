@@ -5,7 +5,7 @@ import type {
   IUrMapData,
   IUserInfo,
 } from "../interface";
-import { gameInstance } from "..";
+import { gameInstance } from "../..";
 
 export class RoomManager {
   io: Namespace;

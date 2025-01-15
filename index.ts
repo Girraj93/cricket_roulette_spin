@@ -1,8 +1,8 @@
 import { createServer } from "http";
 import express from "express";
 import { Server, Socket } from "socket.io";
-import { CricketSpinRoulette } from "./connections/game";
-import { RoomManager } from "./connections/roomManager";
+import { CricketSpinRoulette } from "./src/connections/game";
+import { RoomManager } from "./src/connections/roomManager";
 
 export const app = express();
 export const httpServer = createServer(app);
