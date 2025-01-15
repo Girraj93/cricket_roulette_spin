@@ -1,8 +1,10 @@
 import type { IGameObject } from "../interface";
+import type { RoomManager } from "./roomManager";
 
 export class CricketSpinRoulette {
   position?: number;
   roomDetails: any;
+  roomManager: RoomManager;
   playerDetails?: string[];
   matchHistory?: { gmst: number }[];
   createdTimestamp: Date = new Date();
@@ -37,23 +39,27 @@ export class CricketSpinRoulette {
     24: "csk",
   };
 
-  constructor() {
+  constructor(roomManager: RoomManager) {
     this.currentMatch = { gmst: 0 };
+    this.roomManager = roomManager;
+    // this.roomManager.updateGameState(this.currentMatch.gmst);
     setTimeout(() => {
       this.startMatch();
     }, 1000);
   }
 
-  startMatch() {
+  async startMatch() {
     this.currentMatch.gmst = 1;
+    this.roomManager.updateGameState(this.currentMatch.gmst);
     console.log("new match start");
     setTimeout(() => {
       this.bettingPhase();
     }, 1000);
   }
 
-  bettingPhase() {
+  async bettingPhase() {
     this.currentMatch.gmst = 2;
+    this.roomManager.updateGameState(this.currentMatch.gmst);
     console.log("bettingPhase");
 
     setTimeout(() => {
@@ -61,8 +67,9 @@ export class CricketSpinRoulette {
     }, 1000);
   }
 
-  betSettlement() {
+  async betSettlement() {
     this.currentMatch.gmst = 3;
+    this.roomManager.updateGameState(this.currentMatch.gmst);
     console.log("betSettlement");
 
     setTimeout(() => {
@@ -70,10 +77,12 @@ export class CricketSpinRoulette {
     }, 1000);
   }
 
-  gamePlayStarts() {
+  async gamePlayStarts() {
     this.currentMatch.gmst = 4;
-    this.position = Math.floor(Math.random() * 23 + 1);
+    this.roomManager.updateGameState(this.currentMatch.gmst);
     console.log("gamePlayStarts");
+
+    this.position = Math.floor(Math.random() * 23 + 1);
 
     setTimeout(() => {
       console.log(this.position);
@@ -81,8 +90,9 @@ export class CricketSpinRoulette {
     }, 1000);
   }
 
-  gamePlayEnds() {
+  async gamePlayEnds() {
     this.currentMatch.gmst = 5;
+    this.roomManager.updateGameState(this.currentMatch.gmst);
     console.log("gamePlayEnds");
 
     setTimeout(() => {
@@ -90,8 +100,9 @@ export class CricketSpinRoulette {
     }, 1000);
   }
 
-  resultDeclaration() {
+  async resultDeclaration() {
     this.currentMatch.gmst = 6;
+    this.roomManager.updateGameState(this.currentMatch.gmst);
     console.log("resultDeclaration");
 
     setTimeout(() => {
@@ -99,9 +110,11 @@ export class CricketSpinRoulette {
     }, 1000);
   }
 
-  resultSettlement() {
-    console.log("resultSettlement");
+  async resultSettlement() {
     this.currentMatch.gmst = 7;
+    this.roomManager.updateGameState(this.currentMatch.gmst);
+    console.log("resultSettlement");
+
     setTimeout(() => {
       this.startMatch();
     }, 1000);

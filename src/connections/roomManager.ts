@@ -1,11 +1,6 @@
 import { Socket, type Namespace } from "socket.io";
-import type {
-  IRoomData,
-  IRoundData,
-  IUrMapData,
-  IUserInfo,
-} from "../interface";
-import { gameInstance } from "../..";
+import type { IRoomData, IRoundData, IUserInfo } from "../interface/index";
+import { gameInstance } from "../../index";
 
 export class RoomManager {
   io: Namespace;
@@ -16,8 +11,16 @@ export class RoomManager {
 
   constructor(serverSocket: Namespace) {
     this.io = serverSocket;
-
     this.io.on("connection", this.onConnect.bind(this));
+  }
+
+  updateGameState(gameState: number) {
+    // apporach 2 and this works perfectly fine
+    this.rooms.forEach((room) => (room.gameState = gameState));
+    console.log(
+      "------------updated gameState rooms------------------\n",
+      this.rooms
+    );
   }
 
   // Helper method to create a new room
@@ -68,6 +71,17 @@ export class RoomManager {
     if (!this.roomIdArr.includes(roomId)) this.roomIdArr.push(roomId);
 
     // map user to room for quick access
+    const userExistsInAnotherRoom = this.userRoomMap.get(
+      clientSocket.data?.userId
+    );
+    console.log(userExistsInAnotherRoom);
+    if (userExistsInAnotherRoom) {
+      console.error(
+        "user already exists in another room with roomId:",
+        userExistsInAnotherRoom
+      );
+      return;
+    }
     this.userRoomMap.set(clientSocket.data.userId, roomId);
 
     // check if the room exists, if not, initialize it bu calling createRoom func
